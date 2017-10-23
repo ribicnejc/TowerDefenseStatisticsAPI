@@ -51,10 +51,12 @@ if (!$result) {
 }
 
 // print results, insert id or affected row count
+$myArray = array();
 if ($method == 'GET') {
-    for ($i = 0; $i < mysqli_num_rows($result); $i++) {
-        echo ($i > 0 ? ',' : '') . json_encode(mysqli_fetch_object($result));
+    while($row = $result->fetch_array(MYSQLI_ASSOC)) {
+        $myArray[] = $row;
     }
+    echo json_encode($myArray);
 
 } elseif ($method == 'POST') {
     print_r($input);

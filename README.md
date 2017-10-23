@@ -1,20 +1,26 @@
-#DOC
-##Requests
+# DOC
+## Requests
 
-###Get All Data
-     https://www.nejcribic.com
-###Send Data   
+### Get All Data
+     https://www.nejcribic.com/TowerDefenseStatisticsAPI/root/app/api.php?getAll
 
-##Login*
+### Send Data POST  
+     https://www.nejcribic.com/TowerDefenseStatisticsAPI/root/app/api.php?send
+     
+### Send Data GET  
+     https://www.nejcribic.com/TowerDefenseStatisticsAPI/root/app/api.php?send/time={time}&score={score}&date={date}&device={device}
 
-##Data on game
+
+## Login*
+
+## Data on game
    * Time
    * Score
    * Date
    * Device
    
    
-##Textures
+## Textures
    * Enemy
    
 
