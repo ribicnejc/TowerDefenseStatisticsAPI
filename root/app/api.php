@@ -3,12 +3,17 @@
 // get the HTTP method, path and body of the request
 $url = "http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
 $method = $_SERVER['REQUEST_METHOD'];
-$parts = explode('&', $_SERVER['QUERY_STRING']);
-$request = explode('/', trim($parts[0], '/'));
+
+//get the first element before / after api.php?
+$request = explode('/', $_SERVER['QUERY_STRING']);
+//split elements with / to get requestType (send / get)
+$parts = explode('&', trim($request[1], '/'));
 $input = json_decode(file_get_contents('php://input'), true);
 
-$parts = explode('&', $_SERVER['QUERY_STRING']);
-print_r($parts);
+//all or send
+$requestType = $request[0];
+//print_r($requestType);
+//print_r($parts);
 
 //echo $method;
 //print_r($_GET);
@@ -26,7 +31,21 @@ $table = "game";
 // create SQL based on HTTP method
 switch ($method) {
     case 'GET':
-        $sql = "select * from `$table`";
+        if ($requestType == "all") {
+            $sql = "select * from `$table`";
+        }else if ($requestType == "send"){
+            $param0 = explode("=", $parts[0]);
+            $param1 = explode("=", $parts[1]);
+            $param2 = explode("=", $parts[2]);
+            $param3 = explode("=", $parts[3]);
+//            $set = $
+            $sql = "INSERT INTO `$table` (`$param0[0]`,`$param1[0]`,`$param2[0]`,`$param3[0]`) VALUES ($param0[1],$param1[1],$param2[1],$param3[1])";
+//            print_r($sql);
+        }
+        else{
+            http_response_code(404);
+            die(mysqli_error($link));
+        }
         break;
     case 'PUT':
 //        $sql = "update `$table` set $set where id=$key"; break;
@@ -44,20 +63,26 @@ switch ($method) {
 // excecute SQL statement
 $result = mysqli_query($link, $sql);
 
-// die if SQL statement failed
+// die if SQL statement failed and send reason
 if (!$result) {
     http_response_code(404);
-    die(mysqli_error($link));
+    echo '{"status": "failure",
+           "reason":"' . mysqli_error($link) .'"
+    }';
+    die();
 }
 
 // print results, insert id or affected row count
 $myArray = array();
 if ($method == 'GET') {
-    while($row = $result->fetch_array(MYSQLI_ASSOC)) {
-        $myArray[] = $row;
+    if($requestType == "get"){
+        while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+            $myArray[] = $row;
+        }
+        echo json_encode($myArray);
+    }else {
+        echo '{"status": "success"}';
     }
-    echo json_encode($myArray);
-
 } elseif ($method == 'POST') {
     print_r($input);
     echo mysqli_insert_id($link);
