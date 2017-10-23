@@ -8,9 +8,9 @@ $config = array(
             "host" => "localhost"
         ),
         "dbRelease" => array(
-            "dbname" => "towerdefense",
-            "username" => "root",
-            "password" => "",
+            "dbname" => "nejcribic_test",
+            "username" => "nejcribic_nejc",
+            "password" => "*piF5(QE4xlKw",
             "host" => "localhost"
         )
     ),

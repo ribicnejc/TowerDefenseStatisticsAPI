@@ -27,6 +27,7 @@ $requestType = $request[0];
 require_once '../database/connect.php';
 
 $table = "game";
+//$table = "tower_defense_statistic";
 
 // create SQL based on HTTP method
 switch ($method) {
@@ -75,7 +76,7 @@ if (!$result) {
 // print results, insert id or affected row count
 $myArray = array();
 if ($method == 'GET') {
-    if($requestType == "get"){
+    if($requestType == "all"){
         while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
             $myArray[] = $row;
         }

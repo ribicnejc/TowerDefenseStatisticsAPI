@@ -4,6 +4,7 @@ include '../config/config.php';
 
 
 $db = $config["db"]["dbTest"];
+//$db = $config["db"]["dbRelease"];
 $con = new mysqli($db["host"], $db["username"], $db["password"], $db["dbname"]);
 
 $link = mysqli_connect($db["host"], $db["username"], $db["password"], $db["dbname"]);
