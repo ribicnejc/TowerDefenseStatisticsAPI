@@ -18,6 +18,7 @@ print_r($parts);
 //print_r($entityBody);
 
 // connect to the mysql database
+
 require_once '../database/connect.php';
 
 $table = "game";

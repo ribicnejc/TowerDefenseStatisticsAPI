@@ -1,4 +1,9 @@
 #DOC
+##Requests
+
+###Get All Data
+     https://www.nejcribic.com
+###Send Data   
 
 ##Login*
 
@@ -6,7 +11,7 @@
    * Time
    * Score
    * Date
-   * Level
+   * Device
    
    
 ##Textures
