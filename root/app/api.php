@@ -39,9 +39,10 @@ switch ($method) {
             $param1 = explode("=", $parts[1]);
             $param2 = explode("=", $parts[2]);
             $param3 = explode("=", $parts[3]);
-//            $set = $
-            $sql = "INSERT INTO `$table` (`$param0[0]`,`$param1[0]`,`$param2[0]`,`$param3[0]`) VALUES ($param0[1],$param1[1],$param2[1],$param3[1])";
-//            print_r($sql);
+            $sql = "INSERT INTO `$table` (`$param0[0]`,`$param1[0]`,`$param2[0]`,`$param3[0]`) VALUES ('$param0[1]','$param1[1]','$param2[1]','$param3[1]')";
+//          print_r($sql);
+        } else if ($requestType == "top10") {
+            $sql = "SELECT score, device FROM `$table` ORDER BY score LIMIT 10";
         }
         else{
             http_response_code(404);
@@ -51,6 +52,7 @@ switch ($method) {
     case 'PUT':
 //        $sql = "update `$table` set $set where id=$key"; break;
     case 'POST':
+        print_r($input);
 //        $sql = "insert into `$table` set $set"; break;
     case 'DELETE':
 //        $sql = "delete `$table` where id=$key"; break;
@@ -76,7 +78,7 @@ if (!$result) {
 // print results, insert id or affected row count
 $myArray = array();
 if ($method == 'GET') {
-    if($requestType == "all"){
+    if($requestType == "all" || $requestType == "top10"){
         while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
             $myArray[] = $row;
         }
